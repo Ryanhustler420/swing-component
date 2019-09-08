@@ -2,6 +2,9 @@ package main;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class MainFrame extends JFrame {
 
@@ -27,6 +30,8 @@ public class MainFrame extends JFrame {
 		add(textPanel, BorderLayout.CENTER);
 		add(formPanel, BorderLayout.WEST);
 
+		setJMenuBar(createMenuBar());
+
 		toolbar.setTextChangeListener(new StringChangeListener() {
 			public void textReciever(String text) {
 				textPanel.appendText(text);
@@ -50,5 +55,35 @@ public class MainFrame extends JFrame {
 		setSize(600, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+
+	private JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+
+		// File
+		JMenu fileMenu = new JMenu("File");
+		JMenuItem exportDataItem = new JMenuItem("Export Data...");
+		JMenuItem importDataItem = new JMenuItem("Import Data...");
+		JMenuItem exitItem = new JMenuItem("Exit");
+
+		fileMenu.add(exportDataItem);
+		fileMenu.add(importDataItem);
+		fileMenu.addSeparator();
+		fileMenu.add(exitItem);
+
+		menuBar.add(fileMenu);
+
+		// Window
+		JMenu windowMenu = new JMenu("Window");
+		JMenu showMenu = new JMenu("Show");
+		JMenuItem showFormItem = new JMenuItem("Person Form");
+		showMenu.add(showFormItem);
+
+		windowMenu.add(showMenu);
+
+		// adding everything to menuBar
+		menuBar.add(windowMenu);
+
+		return menuBar;
 	}
 }
