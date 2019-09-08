@@ -18,10 +18,14 @@ public class MainFrame extends JFrame {
 		textPanel = new TextPanel();
 		toolbar = new CustomToolbar();
 
-		toolbar.setTextPanel(textPanel);
-
 		add(toolbar, BorderLayout.NORTH); // top
 		add(textPanel, BorderLayout.CENTER);
+
+		toolbar.setTextChangeListener(new StringChangeListener() {
+			public void textReciever(String text) {
+				textPanel.appendText(text);
+			}
+		});
 
 		setSize(600, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

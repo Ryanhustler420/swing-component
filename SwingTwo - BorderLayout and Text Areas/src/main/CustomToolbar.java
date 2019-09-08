@@ -13,8 +13,7 @@ public class CustomToolbar extends JPanel implements ActionListener {
 
 	private JButton helloBtn;
 	private JButton goodbayBtn;
-
-	private TextPanel textPanel;
+	private StringChangeListener textListener;
 
 	public CustomToolbar() {
 
@@ -31,19 +30,22 @@ public class CustomToolbar extends JPanel implements ActionListener {
 
 	}
 
-	public void setTextPanel(TextPanel textPanel) {
-		this.textPanel = textPanel;
+	public void setTextChangeListener(StringChangeListener listener) {
+		this.textListener = listener;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton clicked = (JButton) e.getSource();
+
 		if (clicked == helloBtn) {
-			// System.out.println("Hello");
-			textPanel.appendText("Hello \n");
-		} else {
-			// System.out.println("Goodbay");
-			textPanel.appendText("Goodbye \n");
+			if (textListener != null)
+				this.textListener.textReciever("Hello \n");
+		} else if (clicked == goodbayBtn) {
+			if (textListener != null)
+				this.textListener.textReciever("GoodBay \n");
 		}
+
 	}
+
 }
