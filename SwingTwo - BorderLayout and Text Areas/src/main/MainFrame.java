@@ -36,6 +36,7 @@ public class MainFrame extends JFrame {
 		toolbar = new CustomToolbar();
 		formPanel = new CustomFormPanel();
 		fileChooser = new JFileChooser();
+		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
 		add(toolbar, BorderLayout.NORTH); // top
 		add(textPanel, BorderLayout.CENTER);
