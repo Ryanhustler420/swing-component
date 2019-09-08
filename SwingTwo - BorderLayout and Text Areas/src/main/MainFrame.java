@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
 
+	// since this MainFrame Creating ALL The Frames
+	// this class must be treated as Controller.
+
 	private static final long serialVersionUID = 1L;
 
 	private TextPanel textPanel;
@@ -12,7 +15,7 @@ public class MainFrame extends JFrame {
 	private CustomFormPanel formPanel;
 
 	public MainFrame() {
-		super("Hello World");
+		super("Underground Marketplace");
 
 		setLayout(new BorderLayout());
 
@@ -27,6 +30,16 @@ public class MainFrame extends JFrame {
 		toolbar.setTextChangeListener(new StringChangeListener() {
 			public void textReciever(String text) {
 				textPanel.appendText(text);
+			}
+		});
+
+		formPanel.setFormListener(new FormListener() {
+			@Override
+			public void formEventOccurred(FormEvent e) {
+				String name = e.getName();
+				String occupation = e.getOccupation();
+
+				textPanel.appendText(name + ": " + occupation + "\n");
 			}
 		});
 
