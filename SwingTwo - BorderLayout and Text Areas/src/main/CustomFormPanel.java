@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -34,6 +36,10 @@ public class CustomFormPanel extends JPanel {
 	private JTextField taxField;
 	private JLabel taxLabel;
 
+	private JRadioButton maleRadio;
+	private JRadioButton femaleRadio;
+	private ButtonGroup genderGroup;
+
 	public CustomFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
@@ -48,6 +54,19 @@ public class CustomFormPanel extends JPanel {
 		citizenCheck = new JCheckBox();
 		taxField = new JTextField(10);
 		taxLabel = new JLabel("Tax ID");
+
+		maleRadio = new JRadioButton("Male");
+		femaleRadio = new JRadioButton("Female");
+
+		maleRadio.setSelected(true);
+		maleRadio.setActionCommand("Male");
+		femaleRadio.setActionCommand("Female");
+
+		genderGroup = new ButtonGroup();
+
+		// Setup gender radio
+		genderGroup.add(maleRadio);
+		genderGroup.add(femaleRadio);
 
 		// Setup text ID
 		taxLabel.setEnabled(false);
@@ -89,10 +108,13 @@ public class CustomFormPanel extends JPanel {
 				String occupation = occupationField.getText().trim();
 				AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
 				String employeeCat = (String) employeCombo.getSelectedItem();
+				String taxId = (String) taxField.getText();
 				boolean isIndian = (boolean) citizenCheck.isSelected();
+				String gender = (String) genderGroup.getSelection().getActionCommand();
 
 				if (!name.isEmpty() && !occupation.isEmpty() && !employeeCat.isEmpty()) {
-					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId(), employeeCat, isIndian);
+					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId(), employeeCat, isIndian, taxId,
+							gender);
 					if (formEventEmitter != null) {
 						formEventEmitter.formEventOccurred(ev);
 					}
@@ -221,6 +243,35 @@ public class CustomFormPanel extends JPanel {
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(taxField, gc);
+
+		/////////// Next row //////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.05;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(new JLabel("Gender: "), gc);
+
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(maleRadio, gc);
+
+		/////////// Next row //////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(femaleRadio, gc);
 
 		/////////// Next row //////////////////
 

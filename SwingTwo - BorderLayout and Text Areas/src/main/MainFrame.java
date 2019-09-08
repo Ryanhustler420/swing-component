@@ -43,6 +43,7 @@ public class MainFrame extends JFrame {
 				boolean isIndian = e.isIndianCitizen();
 
 				textPanel.appendText(name + ": " + occupation + ": " + ageCat + ": " + empCat + ": " + isIndian + "\n");
+				System.out.println(e.getGender());
 			}
 		});
 
