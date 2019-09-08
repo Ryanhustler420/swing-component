@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,6 +25,7 @@ public class MainFrame extends JFrame {
 	private TextPanel textPanel;
 	private CustomToolbar toolbar;
 	private CustomFormPanel formPanel;
+	private JFileChooser fileChooser;
 
 	public MainFrame() {
 		super("Underground Marketplace");
@@ -33,6 +35,7 @@ public class MainFrame extends JFrame {
 		textPanel = new TextPanel();
 		toolbar = new CustomToolbar();
 		formPanel = new CustomFormPanel();
+		fileChooser = new JFileChooser();
 
 		add(toolbar, BorderLayout.NORTH); // top
 		add(textPanel, BorderLayout.CENTER);
@@ -109,14 +112,25 @@ public class MainFrame extends JFrame {
 
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 
+		importDataItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					System.out.println(fileChooser.getSelectedFile());
+				}
+			}
+		});
+
+		exportDataItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					System.out.println(fileChooser.getSelectedFile());
+				}
+			}
+		});
+
 		exitItem.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// String text = JOptionPane.showInputDialog(MainFrame.this, "Enter Your
-				// Username", "Enter User Name",
-				// JOptionPane.OK_OPTION | JOptionPane.QUESTION_MESSAGE);
-
-				// System.out.println(text);
+			public void actionPerformed(ActionEvent ev) {
 
 				int action = JOptionPane.showConfirmDialog(MainFrame.this,
 						"Do you really want to exit the application?", "Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
