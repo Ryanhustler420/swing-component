@@ -1,4 +1,4 @@
-package main;
+package gui;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -102,7 +102,7 @@ public class CustomFormPanel extends JPanel {
 		employeeModel.addElement("self-employed");
 		employeeModel.addElement("unemployed");
 		employeCombo.setModel(employeeModel);
-		// employeCombo.setEditable(true);
+		employeCombo.setEditable(true);
 
 		ageList.setSelectedIndex(1);
 		employeCombo.setSelectedIndex(1);

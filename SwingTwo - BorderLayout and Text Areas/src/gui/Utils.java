@@ -1,4 +1,4 @@
-package main;
+package gui;
 
 public class Utils {
 	public static String getFileExtention(String name) {
