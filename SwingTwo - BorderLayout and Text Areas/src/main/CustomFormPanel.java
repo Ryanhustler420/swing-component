@@ -25,7 +25,7 @@ public class CustomFormPanel extends JPanel {
 	private JButton okBtn;
 	private int fieldWidthSize = 10;
 	private FormListener formEventEmitter;
-	private JList<String> ageList;
+	private JList<AgeCategory> ageList;
 
 	public CustomFormPanel() {
 		Dimension dim = getPreferredSize();
@@ -38,10 +38,10 @@ public class CustomFormPanel extends JPanel {
 		occupationField = new JTextField(fieldWidthSize);
 		ageList = new JList<>();
 
-		DefaultListModel<String> ageModel = new DefaultListModel<>();
-		ageModel.addElement("Under 18");
-		ageModel.addElement("18 to 65");
-		ageModel.addElement("65 or over");
+		DefaultListModel<AgeCategory> ageModel = new DefaultListModel<>();
+		ageModel.addElement(new AgeCategory(0, "Under 18"));
+		ageModel.addElement(new AgeCategory(1, "18 to 65"));
+		ageModel.addElement(new AgeCategory(2, "65 or over"));
 		ageList.setModel(ageModel);
 
 		ageList.setPreferredSize(new Dimension(110, 66));
@@ -54,10 +54,10 @@ public class CustomFormPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = nameField.getText().trim();
 				String occupation = occupationField.getText().trim();
-				String ageCut = (String) ageList.getSelectedValue().trim();
-				
-				if (!name.isEmpty() && !occupation.isEmpty() && !ageCut.isEmpty()) {
-					FormEvent ev = new FormEvent(this, name, occupation);
+				AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
+
+				if (!name.isEmpty() && !occupation.isEmpty()) {
+					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId());
 					if (formEventEmitter != null) {
 						formEventEmitter.formEventOccurred(ev);
 					}
@@ -137,5 +137,24 @@ public class CustomFormPanel extends JPanel {
 
 	public void setFormListener(FormListener e) {
 		this.formEventEmitter = e;
+	}
+}
+
+class AgeCategory {
+	private int id;
+	private String text;
+
+	public AgeCategory(int id, String text) {
+		this.id = id;
+		this.text = text;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return text;
 	}
 }
