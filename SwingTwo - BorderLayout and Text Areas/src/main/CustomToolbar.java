@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -17,6 +18,7 @@ public class CustomToolbar extends JPanel implements ActionListener {
 
 	public CustomToolbar() {
 
+		setBorder(BorderFactory.createEtchedBorder());
 		helloBtn = new JButton("Hello");
 		goodbayBtn = new JButton("Goodbay");
 
