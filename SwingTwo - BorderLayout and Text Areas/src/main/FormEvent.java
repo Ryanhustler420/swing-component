@@ -10,17 +10,24 @@ public class FormEvent extends EventObject {
 	private String occupation;
 	private int ageCategory;
 	private String empCat;
+	private boolean indianCitizen;
 
 	public FormEvent(Object source) {
 		super(source);
 	}
 
-	public FormEvent(Object source, String name, String occupation, int ageCat, String empCat) {
+	public FormEvent(Object source, String name, String occupation, int ageCat, String empCat,
+			boolean isIndianCitizen) {
 		super(source);
 		this.name = name;
 		this.occupation = occupation;
 		this.ageCategory = ageCat;
 		this.empCat = empCat;
+		this.indianCitizen = isIndianCitizen;
+	}
+
+	public boolean isIndianCitizen() {
+		return indianCitizen;
 	}
 
 	public String getEmpCat() {

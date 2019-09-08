@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -29,6 +30,9 @@ public class CustomFormPanel extends JPanel {
 	private FormListener formEventEmitter;
 	private JList<AgeCategory> ageList;
 	private JComboBox<String> employeCombo;
+	private JCheckBox citizenCheck;
+	private JTextField taxField;
+	private JLabel taxLabel;
 
 	public CustomFormPanel() {
 		Dimension dim = getPreferredSize();
@@ -41,6 +45,21 @@ public class CustomFormPanel extends JPanel {
 		occupationField = new JTextField(fieldWidthSize);
 		ageList = new JList<>();
 		employeCombo = new JComboBox<>();
+		citizenCheck = new JCheckBox();
+		taxField = new JTextField(10);
+		taxLabel = new JLabel("Tax ID");
+
+		// Setup text ID
+		taxLabel.setEnabled(false);
+		taxField.setEnabled(false);
+
+		citizenCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean isTicked = citizenCheck.isSelected();
+				taxLabel.setEnabled(isTicked);
+				taxField.setEnabled(isTicked);
+			}
+		});
 
 		// Setup List box
 		DefaultListModel<AgeCategory> ageModel = new DefaultListModel<>();
@@ -70,9 +89,10 @@ public class CustomFormPanel extends JPanel {
 				String occupation = occupationField.getText().trim();
 				AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
 				String employeeCat = (String) employeCombo.getSelectedItem();
+				boolean isIndian = (boolean) citizenCheck.isSelected();
 
-				if (!name.isEmpty() && !occupation.isEmpty()) {
-					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId(), employeeCat);
+				if (!name.isEmpty() && !occupation.isEmpty() && !employeeCat.isEmpty()) {
+					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId(), employeeCat, isIndian);
 					if (formEventEmitter != null) {
 						formEventEmitter.formEventOccurred(ev);
 					}
@@ -167,6 +187,40 @@ public class CustomFormPanel extends JPanel {
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(employeCombo, gc);
+
+		/////////// Next row //////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.insets = new Insets(2, 0, 0, 5);
+		add(new JLabel("Indian Citizen: "), gc);
+
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(citizenCheck, gc);
+
+		/////////// Next row //////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(taxLabel, gc);
+
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(taxField, gc);
 
 		/////////// Next row //////////////////
 
