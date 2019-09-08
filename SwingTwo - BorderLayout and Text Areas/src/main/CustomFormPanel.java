@@ -8,8 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -26,6 +28,7 @@ public class CustomFormPanel extends JPanel {
 	private int fieldWidthSize = 10;
 	private FormListener formEventEmitter;
 	private JList<AgeCategory> ageList;
+	private JComboBox<String> employeCombo;
 
 	public CustomFormPanel() {
 		Dimension dim = getPreferredSize();
@@ -37,16 +40,27 @@ public class CustomFormPanel extends JPanel {
 		nameField = new JTextField(fieldWidthSize);
 		occupationField = new JTextField(fieldWidthSize);
 		ageList = new JList<>();
+		employeCombo = new JComboBox<>();
 
+		// Setup List box
 		DefaultListModel<AgeCategory> ageModel = new DefaultListModel<>();
 		ageModel.addElement(new AgeCategory(0, "Under 18"));
 		ageModel.addElement(new AgeCategory(1, "18 to 65"));
 		ageModel.addElement(new AgeCategory(2, "65 or over"));
 		ageList.setModel(ageModel);
-
 		ageList.setPreferredSize(new Dimension(110, 66));
 		ageList.setBorder(BorderFactory.createEtchedBorder());
+
+		// Setup Combo box
+		DefaultComboBoxModel<String> employeeModel = new DefaultComboBoxModel<>();
+		employeeModel.addElement("employed");
+		employeeModel.addElement("self-employed");
+		employeeModel.addElement("unemployed");
+		employeCombo.setModel(employeeModel);
+		// employeCombo.setEditable(true);
+
 		ageList.setSelectedIndex(1);
+		employeCombo.setSelectedIndex(1);
 
 		okBtn = new JButton("OK");
 
@@ -55,9 +69,10 @@ public class CustomFormPanel extends JPanel {
 				String name = nameField.getText().trim();
 				String occupation = occupationField.getText().trim();
 				AgeCategory ageCat = (AgeCategory) ageList.getSelectedValue();
+				String employeeCat = (String) employeCombo.getSelectedItem();
 
 				if (!name.isEmpty() && !occupation.isEmpty()) {
-					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId());
+					FormEvent ev = new FormEvent(this, name, occupation, ageCat.getId(), employeeCat);
 					if (formEventEmitter != null) {
 						formEventEmitter.formEventOccurred(ev);
 					}
@@ -69,12 +84,19 @@ public class CustomFormPanel extends JPanel {
 		Border outterBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outterBorder, innerBorder));
 
+		layoutComponent();
+
+	}
+
+	public void layoutComponent() {
 		// it's so flexible
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
 
 		/////////// First row //////////////////
+
+		gc.gridy = 0;
 
 		gc.weightx = 1;
 		gc.weighty = 0.1;
@@ -96,10 +118,11 @@ public class CustomFormPanel extends JPanel {
 
 		/////////// Second row //////////////////
 
+		gc.gridy++;
+
 		gc.weightx = 1;
 		gc.weighty = 0.1;
 
-		gc.gridy = 1;
 		gc.gridx = 0;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = new Insets(0, 0, 0, 5);
@@ -111,23 +134,47 @@ public class CustomFormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(occupationField, gc);
 
-		/////////// Third row //////////////////
+		/////////// Next row //////////////////
+
+		gc.gridy++;
 
 		gc.weightx = 1;
 		gc.weighty = 0.2;
 
-		gc.gridy = 2;
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(new JLabel("Age: "), gc);
+
 		gc.gridx = 1;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(ageList, gc);
 
-		/////////// Fourth row //////////////////
+		/////////// Next row //////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		gc.insets = new Insets(4, 0, 0, 5);
+		add(new JLabel("Employment: "), gc);
+
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(employeCombo, gc);
+
+		/////////// Next row //////////////////
+
+		gc.gridy++;
 
 		gc.weightx = 1;
 		gc.weighty = 2.0;
 
-		gc.gridy = 3;
 		gc.gridx = 1;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
