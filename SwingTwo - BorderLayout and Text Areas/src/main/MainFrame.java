@@ -1,6 +1,10 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -76,13 +80,22 @@ public class MainFrame extends JFrame {
 		// Window
 		JMenu windowMenu = new JMenu("Window");
 		JMenu showMenu = new JMenu("Show");
-		JMenuItem showFormItem = new JMenuItem("Person Form");
-		showMenu.add(showFormItem);
+		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
+		showFormItem.setSelected(true);
 
+		showMenu.add(showFormItem);
 		windowMenu.add(showMenu);
 
 		// adding everything to menuBar
 		menuBar.add(windowMenu);
+
+		// checkBox person form action Listener
+		showFormItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) ev.getSource();
+				formPanel.setVisible(menuItem.isSelected());
+			}
+		});
 
 		return menuBar;
 	}
