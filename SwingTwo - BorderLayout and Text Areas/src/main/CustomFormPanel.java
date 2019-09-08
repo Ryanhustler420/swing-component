@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -54,6 +55,12 @@ public class CustomFormPanel extends JPanel {
 		citizenCheck = new JCheckBox();
 		taxField = new JTextField(10);
 		taxLabel = new JLabel("Tax ID");
+		okBtn = new JButton("OK");
+
+		// Setup Mnemonics
+		okBtn.setMnemonic(KeyEvent.VK_O);
+		nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+		nameLabel.setLabelFor(nameField);
 
 		maleRadio = new JRadioButton("Male");
 		femaleRadio = new JRadioButton("Female");
@@ -86,7 +93,7 @@ public class CustomFormPanel extends JPanel {
 		ageModel.addElement(new AgeCategory(1, "18 to 65"));
 		ageModel.addElement(new AgeCategory(2, "65 or over"));
 		ageList.setModel(ageModel);
-		ageList.setPreferredSize(new Dimension(110, 66));
+		ageList.setPreferredSize(new Dimension(114, 70));
 		ageList.setBorder(BorderFactory.createEtchedBorder());
 
 		// Setup Combo box
@@ -99,8 +106,6 @@ public class CustomFormPanel extends JPanel {
 
 		ageList.setSelectedIndex(1);
 		employeCombo.setSelectedIndex(1);
-
-		okBtn = new JButton("OK");
 
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
