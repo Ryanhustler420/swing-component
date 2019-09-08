@@ -14,7 +14,7 @@ public class CustomToolbar extends JPanel implements ActionListener {
 
 	private JButton helloBtn;
 	private JButton goodbayBtn;
-	private StringChangeListener textListener;
+	private IStringChangeListener textListener;
 
 	public CustomToolbar() {
 
@@ -32,7 +32,7 @@ public class CustomToolbar extends JPanel implements ActionListener {
 
 	}
 
-	public void setTextChangeListener(StringChangeListener listener) {
+	public void setTextChangeListener(IStringChangeListener listener) {
 		this.textListener = listener;
 	}
 

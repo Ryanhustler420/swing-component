@@ -30,7 +30,7 @@ public class CustomFormPanel extends JPanel {
 	private JTextField nameField, occupationField;
 	private JButton okBtn;
 	private int fieldWidthSize = 10;
-	private FormListener formEventEmitter;
+	private IFormListener formEventEmitter;
 	private JList<AgeCategory> ageList;
 	private JComboBox<String> employeCombo;
 	private JCheckBox citizenCheck;
@@ -292,7 +292,7 @@ public class CustomFormPanel extends JPanel {
 
 	}
 
-	public void setFormListener(FormListener e) {
+	public void setFormListener(IFormListener e) {
 		this.formEventEmitter = e;
 	}
 }

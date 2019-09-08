@@ -15,6 +15,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import controller.Controller;
+
 public class MainFrame extends JFrame {
 
 	// since this MainFrame Creating ALL The Frames
@@ -26,9 +28,12 @@ public class MainFrame extends JFrame {
 	private CustomToolbar toolbar;
 	private CustomFormPanel formPanel;
 	private JFileChooser fileChooser;
+	private Controller controller;
 
 	public MainFrame() {
 		super("Underground Marketplace");
+
+		controller = new Controller();
 
 		setLayout(new BorderLayout());
 
@@ -44,23 +49,16 @@ public class MainFrame extends JFrame {
 
 		setJMenuBar(createMenuBar());
 
-		toolbar.setTextChangeListener(new StringChangeListener() {
+		toolbar.setTextChangeListener(new IStringChangeListener() {
 			public void textReciever(String text) {
 				textPanel.appendText(text);
 			}
 		});
 
-		formPanel.setFormListener(new FormListener() {
+		formPanel.setFormListener(new IFormListener() {
 			@Override
 			public void formEventOccurred(FormEvent e) {
-				String name = e.getName();
-				String occupation = e.getOccupation();
-				int ageCat = e.getAgeCategory();
-				String empCat = e.getEmpCat();
-				boolean isIndian = e.isIndianCitizen();
-
-				textPanel.appendText(name + ": " + occupation + ": " + ageCat + ": " + empCat + ": " + isIndian + "\n");
-				System.out.println(e.getGender());
+				controller.addPerson(e);
 			}
 		});
 

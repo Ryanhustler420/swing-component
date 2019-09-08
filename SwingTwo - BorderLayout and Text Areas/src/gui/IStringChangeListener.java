@@ -1,5 +1,5 @@
 package gui;
 
-public interface StringChangeListener {
+public interface IStringChangeListener {
 	public void textReciever(String text);
 }
