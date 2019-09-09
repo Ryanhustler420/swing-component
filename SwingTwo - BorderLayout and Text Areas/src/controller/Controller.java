@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import gui.FormEvent;
 import model.AgeCategory;
 import model.Database;
@@ -10,8 +12,11 @@ import model.Person;
 public class Controller {
 	Database db = new Database();
 
-	public void addPerson(FormEvent ev) {
+	public ArrayList<Person> getPeoples() {
+		return db.getPeoples();
+	}
 
+	public void addPerson(FormEvent ev) {
 		String name = ev.getName();
 		String occupation = ev.getOccupation();
 		int ageCatId = ev.getAgeCategory();

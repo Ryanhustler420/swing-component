@@ -29,6 +29,7 @@ public class MainFrame extends JFrame {
 	private CustomFormPanel formPanel;
 	private JFileChooser fileChooser;
 	private Controller controller;
+	private CustomTablePanel customTablePanel;
 
 	public MainFrame() {
 		super("Underground Marketplace");
@@ -40,11 +41,14 @@ public class MainFrame extends JFrame {
 		textPanel = new TextPanel();
 		toolbar = new CustomToolbar();
 		formPanel = new CustomFormPanel();
+		customTablePanel = new CustomTablePanel();
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
+		customTablePanel.setData(controller.getPeoples());
+
 		add(toolbar, BorderLayout.NORTH); // top
-		add(textPanel, BorderLayout.CENTER);
+		add(customTablePanel, BorderLayout.CENTER);
 		add(formPanel, BorderLayout.WEST);
 
 		setJMenuBar(createMenuBar());
@@ -59,11 +63,12 @@ public class MainFrame extends JFrame {
 			@Override
 			public void formEventOccurred(FormEvent e) {
 				controller.addPerson(e);
+				customTablePanel.refresh();
 			}
 		});
 
 		setMinimumSize(new Dimension(500, 400));
-		setSize(600, 500);
+		setSize(900, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
